@@ -34,10 +34,11 @@ const DailyTracker: React.FC = () => {
         setTrackers(prefill);
       } else {
         const today = new Date();
+        const dataCount = data.length;
         const prefill: Tracker[] = Array.from(
           { length: 30 - data.length },
           (_, i) => ({
-            id: i + 1,
+            id: i + 1 + dataCount,
             date: new Date(
               today.getFullYear(),
               today.getMonth(),
@@ -54,7 +55,6 @@ const DailyTracker: React.FC = () => {
         );
         var newData = [...data, ...prefill];
         setTrackers(newData);
-        console.log(newData);
       }
     };
 
