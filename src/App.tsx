@@ -1,4 +1,3 @@
-import React from "react";
 import DashboardCard from "./components/DashboardCard";
 import ProgressChart from "./components/ProgressChart";
 import DailyTracker from "./components/DailyTracker";

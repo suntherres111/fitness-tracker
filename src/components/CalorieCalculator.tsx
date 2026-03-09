@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const CalorieCalculator = () => {
   const [calories, setCalories] = useState(1600);

@@ -75,7 +75,7 @@ const DailyTracker: React.FC = () => {
   // Save single tracker row to Supabase
   const handleSave = async (tracker: Tracker) => {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("daily_tracker")
         .upsert([tracker], { onConflict: "id" }); // ✅ array for onConflict
       if (error) throw error;
