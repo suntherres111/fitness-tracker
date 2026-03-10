@@ -34,11 +34,33 @@ const DailyTracker = () => {
     }
   };
 
+  const getUserIdFromServer = async () => {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Error getting user:", error.message);
+      return null;
+    }
+
+    if (user) {
+      const userId = user.id;
+      console.log("User ID:", userId);
+      return userId;
+    } else {
+      console.log("No user signed in");
+      return null;
+    }
+  };
+
   useEffect(() => {
     loadData();
   }, []);
 
   const handleSubmit = async () => {
+    const user_id = await getUserIdFromServer();
     await supabase.from("daily_tracker").insert([
       {
         date: form.date,
@@ -46,6 +68,7 @@ const DailyTracker = () => {
         calories_eaten: Number(form.calories_eaten),
         exercise_burn: Number(form.exercise_burn),
         steps: Number(form.steps),
+        user_id: user_id,
       },
     ]);
 
