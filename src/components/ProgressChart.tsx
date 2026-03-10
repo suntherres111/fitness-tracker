@@ -7,21 +7,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { supabase } from "../lib/supabaseClient";
-import type { ProgressChart } from "../types/progressChart";
+import type { ProgressChartData } from "../types/progressChart";
 import { useEffect, useState } from "react";
 
-// const data = [
-//   { day: 1, weight: 125 },
-//   { day: 7, weight: 123 },
-//   { day: 14, weight: 121 },
-//   { day: 21, weight: 119 },
-//   { day: 30, weight: 117 },
-// ];
-
-// supabase.from("tracker").select("date, weight").order("date");
-
 const ProgressChart = () => {
-  const [data, setData] = useState<ProgressChart[]>([]);
+  const [data, setData] = useState<ProgressChartData[]>([]);
   // Fetch data from Supabase
   const loadData = async () => {
     const { data, error } = await supabase
@@ -36,6 +26,7 @@ const ProgressChart = () => {
   useEffect(() => {
     loadData();
   }, []);
+
   return (
     <div className="bg-white rounded-2xl shadow p-6">
       <h2 className="text-xl font-bold mb-4">Weight Progress</h2>
