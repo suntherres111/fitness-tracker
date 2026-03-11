@@ -5,6 +5,7 @@ import ProgressChart from "./ProgressChart";
 import WeeklyAnalytics from "./WeeklyAnalytics";
 import CalorieDeficit from "./CalorieDeficit";
 import WeightStats from "./WeightStats";
+import GoalProjection from "./GoalProjection";
 
 const Dashboard = () => {
   const handleLogout = async () => {
@@ -36,9 +37,10 @@ const Dashboard = () => {
 
         {/* Summary Cards */}
         <WeightStats />
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <div className="grid md:grid-cols-3 gap-6 mb-6">
           <WeeklyAnalytics />
           <CalorieDeficit />
+          <GoalProjection />
         </div>
 
         {/* Weight Chart */}
