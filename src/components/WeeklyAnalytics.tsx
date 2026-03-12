@@ -26,9 +26,15 @@ const WeeklyAnalytics = () => {
     <div className="bg-white p-6 rounded shadow">
       <h2 className="text-xl font-bold mb-2">Weekly Fat Loss</h2>
 
-      <p className="text-2xl font-bold text-green-600">
-        {loss.toFixed(2)} kg lost
-      </p>
+      {loss > 0 ? (
+        <p className="text-2xl font-bold text-green-600">
+          {loss.toFixed(2)} kg lost
+        </p>
+      ) : (
+        <p className="text-2xl font-bold text-red-600">
+          {Math.abs(loss).toFixed(2)} kg gained
+        </p>
+      )}
     </div>
   );
 };

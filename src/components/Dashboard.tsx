@@ -6,6 +6,7 @@ import WeeklyAnalytics from "./WeeklyAnalytics";
 import CalorieDeficit from "./CalorieDeficit";
 import WeightStats from "./WeightStats";
 import GoalProjection from "./GoalProjection";
+import CalorieEatenChart from "./CalorieEatenChart";
 
 const Dashboard = () => {
   const handleLogout = async () => {
@@ -45,8 +46,9 @@ const Dashboard = () => {
 
         {/* Weight Chart */}
 
-        <div className="mb-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
           <ProgressChart />
+          <CalorieEatenChart />
         </div>
 
         {/* Daily Tracker */}

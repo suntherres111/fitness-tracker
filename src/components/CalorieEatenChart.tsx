@@ -5,25 +5,25 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Brush,
 } from "recharts";
 import { supabase } from "../lib/supabaseClient";
-import type {
-  ProgressChartData,
-  CalorieEatenChartData,
-} from "../types/progressChart";
+import type { CalorieEatenChartData } from "../types/progressChart";
 import { useEffect, useState } from "react";
 
-const ProgressChart = () => {
-  const [data, setData] = useState<ProgressChartData[]>([]);
+const CalorieEatenChart = () => {
+  const [calorieEatenData, setCalorieEatenData] = useState<
+    CalorieEatenChartData[]
+  >([]);
   // Fetch data from Supabase
   const loadData = async () => {
     const { data, error } = await supabase
       .from("daily_tracker")
-      .select("date, weight, calories_eaten")
+      .select("date, calories_eaten")
       .order("date");
 
     if (!error && data) {
-      setData(data);
+      setCalorieEatenData(data);
     }
   };
   useEffect(() => {
@@ -32,18 +32,23 @@ const ProgressChart = () => {
 
   return (
     <div className="bg-white rounded-2xl shadow p-6">
-      <h2 className="text-xl font-bold mb-4">Weight Progress</h2>
-
+      <h2 className="text-xl font-bold mb-4">Calorie Eaten</h2>
       <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data} syncId="anyId">
+        <LineChart data={calorieEatenData} syncId="anyId">
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
-          <Line type="monotone" dataKey="weight" strokeWidth={3} />
+
+          <Line
+            type="monotone"
+            dataKey="calories_eaten"
+            strokeWidth={3}
+            stroke="rgb(130, 202, 157)"
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-export default ProgressChart;
+export default CalorieEatenChart;
