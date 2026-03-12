@@ -7,10 +7,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { supabase } from "../lib/supabaseClient";
-import type {
-  ProgressChartData,
-  CalorieEatenChartData,
-} from "../types/progressChart";
+import type { ProgressChartData } from "../types/progressChart";
 import { useEffect, useState } from "react";
 
 const ProgressChart = () => {

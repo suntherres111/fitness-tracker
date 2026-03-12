@@ -5,7 +5,6 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Brush,
 } from "recharts";
 import { supabase } from "../lib/supabaseClient";
 import type { CalorieEatenChartData } from "../types/progressChart";
