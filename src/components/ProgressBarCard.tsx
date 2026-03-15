@@ -34,7 +34,7 @@ const ProgressCard = ({
       <div className="w-full bg-gray-200 rounded-full h-3">
         <div
           className={`${barColor} h-3 rounded-full transition-all duration-500`}
-          style={{ width: `${progress}%` }}
+          style={{ width: `${Math.max(progress, 3)}%` }}
         />
       </div>
 
