@@ -43,13 +43,33 @@ const WeightStats = () => {
   return (
     <div>
       <div className="grid md:grid-cols-4 gap-4 mb-6">
-        <StatCard title="Start Weight" value={`${startWeight ?? "-"} kg`} />
-        <StatCard title="Current Weight" value={`${currentWeight ?? "-"} kg`} />
-        <StatCard title="Total Lost" value={`${totalLost} kg`} />
-        <StatCard title="Target Weight" value={`${targetWeight} kg`} />
+        <StatCard
+          title="Start Weight"
+          value={`${startWeight ?? "-"} kg`}
+          valueTextColor="slate"
+        />
+        <StatCard
+          title="Current Weight"
+          value={`${currentWeight ?? "-"} kg`}
+          valueTextColor="amber"
+        />
+        <StatCard
+          title="Total Lost"
+          value={`${totalLost} kg`}
+          valueTextColor="emerald"
+        />
+        <StatCard
+          title="Target Weight"
+          value={`${targetWeight} kg`}
+          valueTextColor="blue"
+        />
       </div>
       <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <StatCard title="Personal Best" value={`${personalBestWeight} kg`} />
+        <StatCard
+          title="Personal Best"
+          value={`${personalBestWeight} kg`}
+          valueTextColor="teal"
+        />
         <ProgressCard
           startWeight={safeStartWeight}
           currentWeight={safeCurrentWeight}

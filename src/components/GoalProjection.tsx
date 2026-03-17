@@ -68,7 +68,7 @@ const GoalProjection = () => {
     <div className="bg-white shadow rounded-xl p-5">
       <h2 className="text-xl font-bold mb-2">Estimated Goal Date</h2>
 
-      <p className="text-2xl font-bold mt-1">{goalDate || "-"}</p>
+      <p className="text-blue-800 text-2xl font-bold mt-1">{goalDate || "-"}</p>
     </div>
   );
 };

@@ -23,11 +23,20 @@ const ProgressCard = ({
         ? "bg-yellow-500"
         : "bg-green-500";
 
+  const analyticColor =
+    progress > 0
+      ? "text-emerald-600"
+      : progress == 0
+        ? "text-cyan-600"
+        : "text-red-600";
+
   return (
     <div className="bg-white shadow rounded-xl p-5">
       <p className="text-gray-500 text-sm mb-2">Goal Progress</p>
 
-      <p className="text-2xl font-bold mb-3">{progress.toFixed(1)}%</p>
+      <p className={`${analyticColor} text-2xl font-bold mb-3`}>
+        {progress.toFixed(1)}%
+      </p>
 
       {/* Progress bar */}
 

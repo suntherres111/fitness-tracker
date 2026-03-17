@@ -22,19 +22,19 @@ const WeeklyAnalytics = () => {
     load();
   }, []);
 
+  const analyticColor =
+    loss > 0
+      ? "text-emerald-600"
+      : loss == 0
+        ? "text-cyan-600"
+        : "text-red-600";
+
   return (
     <div className="bg-white p-6 rounded shadow">
       <h2 className="text-xl font-bold mb-2">Weekly Fat Loss</h2>
-
-      {loss > 0 ? (
-        <p className="text-2xl font-bold text-green-600">
-          {loss.toFixed(2)} kg lost
-        </p>
-      ) : (
-        <p className="text-2xl font-bold text-red-600">
-          {Math.abs(loss).toFixed(2)} kg gained
-        </p>
-      )}
+      <p className={`text-2xl font-bold ${analyticColor}`}>
+        {loss.toFixed(2)} kg lost
+      </p>
     </div>
   );
 };

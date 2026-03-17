@@ -38,6 +38,7 @@ const Dashboard = () => {
 
         {/* Summary Cards */}
         <WeightStats />
+
         <div className="grid md:grid-cols-3 gap-6 mb-6">
           <WeeklyAnalytics />
           <CalorieDeficit />
