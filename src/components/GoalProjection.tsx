@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // import { supabase } from "../lib/supabaseClient";
 import type { Tracker } from "../types/tracker";
 
@@ -10,45 +10,34 @@ interface Props {
 const targetWeight = 110;
 
 const GoalProjection = ({ entriesData, refreshData }: Props) => {
-  const [goalDate, setGoalDate] = useState<string>("");
+  // const [goalDate, setGoalDate] = useState<string>("");
+  let goalDate = "";
 
-  //let goalDate = "";
+  if (entriesData && entriesData.length >= 2) {
+    const weights = entriesData;
+    const startWeight = weights[0].weight;
+    const currentWeight = weights[weights.length - 1].weight;
 
-  // const loadWeights = async () => {
+    const startDate = new Date(weights[0].date);
+    const currentDate = new Date(weights[weights.length - 1].date);
 
-  // };
+    const days =
+      (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+    const dailyLoss = (startWeight - currentWeight) / days;
 
-  useEffect(() => {
-    if (entriesData && entriesData.length >= 2) {
-      const weights = entriesData;
-      const startWeight = weights[0].weight;
-      const currentWeight = weights[weights.length - 1].weight;
+    const remainingWeight = currentWeight - targetWeight;
 
-      const startDate = new Date(weights[0].date);
-      const currentDate = new Date(weights[weights.length - 1].date);
+    const daysNeeded = remainingWeight / dailyLoss;
 
-      const days =
-        (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
-
-      if (days <= 0) return;
-
-      const dailyLoss = (startWeight - currentWeight) / days;
-
-      if (dailyLoss <= 0) {
-        setGoalDate("Trend unclear");
-        return;
-      } else {
-        const remainingWeight = currentWeight - targetWeight;
-
-        const daysNeeded = remainingWeight / dailyLoss;
-
-        const goal = new Date();
-        goal.setDate(goal.getDate() + Math.ceil(daysNeeded));
-
-        setGoalDate(goal.toLocaleDateString());
-      }
+    const goal = new Date();
+    goal.setDate(goal.getDate() + Math.ceil(daysNeeded));
+    if (dailyLoss <= 0) {
+      goalDate = "Trend Unclear";
+    } else {
+      goalDate = goal.toLocaleDateString();
     }
-
+  }
+  useEffect(() => {
     refreshData();
   }, []);
 
