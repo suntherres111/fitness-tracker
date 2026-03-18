@@ -18,7 +18,7 @@ const Dashboard = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };
-  let fetchEntries = async () => {
+  const fetchEntries = async () => {
     try {
       if (userId) {
         const { data, error } = await supabase
@@ -47,13 +47,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     init();
   }, []);
 
   useEffect(() => {
     if (!userId) return;
-    fetchEntries = async () => {
+    const fetchDashboardData = async () => {
       try {
         setLoading(true);
 
@@ -73,7 +72,7 @@ const Dashboard = () => {
       }
     };
 
-    fetchEntries();
+    fetchDashboardData();
   }, [userId]);
 
   if (loading) {
