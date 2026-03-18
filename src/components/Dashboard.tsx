@@ -18,7 +18,23 @@ const Dashboard = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };
-  let fetchEntries = async () => {};
+  let fetchEntries = async () => {
+    try {
+      if (userId) {
+        const { data, error } = await supabase
+          .from("daily_tracker")
+          .select("*")
+          .eq("user_id", userId)
+          .order("date", { ascending: true });
+
+        if (!error && data) {
+          setDailyTrackers(data);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const init = async () => {
     const { data } = await supabase.auth.getSession();
