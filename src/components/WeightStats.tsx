@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
 import StatCard from "./StatCard";
 import ProgressCard from "./ProgressBarCard";
+import type { Tracker } from "../types/tracker";
 
 const targetWeight = 110;
+interface Props {
+  entriesData: Tracker[];
+  refreshData: () => void;
+}
 
-const WeightStats = () => {
+const WeightStats = ({ entriesData, refreshData }: Props) => {
   const [startWeight, setStartWeight] = useState<number | null>(null);
   const [currentWeight, setCurrentWeight] = useState<number | null>(null);
   const [personalBestWeight, setPersonalBestWeight] = useState<number | null>(
     null,
   );
+  // const startWeight = entriesData[0].weight;
+  // const currentWeight = entriesData[entriesData.length - 1].weight;
+  // const weights: number[] = entriesData.map((m) => m.weight);
+  // const personalBestWeight =Math.min(...weights);
 
   useEffect(() => {
     const load = async () => {
-      const { data } = await supabase
-        .from("daily_tracker")
-        .select("weight,date")
-        .order("date", { ascending: true });
-
-      if (!data || data.length === 0) return;
-
-      const first = data[0].weight;
-      const last = data[data.length - 1].weight;
-      const weights: number[] = data.map((m) => m.weight);
+      const first = entriesData[0].weight;
+      const last = entriesData[entriesData.length - 1].weight;
+      const weights: number[] = entriesData.map((m) => m.weight);
       const personalBest = Math.min(...weights);
 
       setStartWeight(first);
@@ -32,6 +33,7 @@ const WeightStats = () => {
     };
 
     load();
+    refreshData();
   }, []);
   // Safe values fallback
   const safeStartWeight = startWeight ?? targetWeight; // fallback if null

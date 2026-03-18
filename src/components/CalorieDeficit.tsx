@@ -1,27 +1,22 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { useEffect } from "react";
+// import { supabase } from "../lib/supabaseClient";
+import type { Tracker } from "../types/tracker";
 
 const maintenance = 2600;
+interface Props {
+  entriesData: Tracker[];
+  refreshData: () => void;
+}
 
-const CalorieDeficit = () => {
-  const [deficit, setDeficit] = useState(0);
+const CalorieDeficit = ({ entriesData, refreshData }: Props) => {
+  // const [deficit, setDeficit] = useState(0);
+  const totalBurn = entriesData.reduce((sum, d) => sum + d.exercise_burn, 0);
 
+  const deficit = maintenance - 1600 + totalBurn / entriesData.length;
+
+  // setDeficit(dailyDeficit);
   useEffect(() => {
-    const load = async () => {
-      const { data } = await supabase
-        .from("daily_tracker")
-        .select("exercise_burn");
-
-      if (!data) return;
-
-      const totalBurn = data.reduce((sum, d) => sum + d.exercise_burn, 0);
-
-      const dailyDeficit = maintenance - 1600 + totalBurn / data.length;
-
-      setDeficit(dailyDeficit);
-    };
-
-    load();
+    refreshData();
   }, []);
 
   return (

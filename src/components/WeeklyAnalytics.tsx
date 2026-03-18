@@ -1,25 +1,18 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { useEffect } from "react";
+import type { Tracker } from "../types/tracker";
 
-const WeeklyAnalytics = () => {
-  const [loss, setLoss] = useState(0);
+interface Props {
+  entriesData: Tracker[];
+  refreshData: () => void;
+}
+
+const WeeklyAnalytics = ({ entriesData, refreshData }: Props) => {
+  const first = entriesData[0].weight;
+  const last = entriesData[entriesData.length - 1].weight;
+  const loss = first - last;
 
   useEffect(() => {
-    const load = async () => {
-      const { data } = await supabase
-        .from("daily_tracker")
-        .select("weight,date")
-        .order("date");
-
-      if (!data || data.length < 2) return;
-
-      const first = data[0].weight;
-      const last = data[data.length - 1].weight;
-
-      setLoss(first - last);
-    };
-
-    load();
+    refreshData();
   }, []);
 
   const analyticColor =

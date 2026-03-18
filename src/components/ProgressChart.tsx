@@ -6,26 +6,21 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { supabase } from "../lib/supabaseClient";
+// import { supabase } from "../lib/supabaseClient";
 import type { ProgressChartData } from "../types/progressChart";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import type { Tracker } from "../types/tracker";
 
-const ProgressChart = () => {
-  const [data, setData] = useState<ProgressChartData[]>([]);
-  // Fetch data from Supabase
-  const loadData = async () => {
-    const { data, error } = await supabase
-      .from("daily_tracker")
-      .select("date, weight, calories_eaten")
-      .order("date");
+interface Props {
+  entriesData: Tracker[];
+  refreshData: () => void;
+}
 
-    if (!error && data) {
-      setData(data);
-    }
-  };
+const ProgressChart = ({ entriesData, refreshData }: Props) => {
   useEffect(() => {
-    loadData();
+    refreshData();
   }, []);
+  const data: ProgressChartData[] = entriesData;
 
   return (
     <div className="bg-white rounded-2xl shadow p-6">

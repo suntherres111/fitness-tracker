@@ -6,27 +6,19 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { supabase } from "../lib/supabaseClient";
 import type { CalorieEatenChartData } from "../types/progressChart";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import type { Tracker } from "../types/tracker";
 
-const CalorieEatenChart = () => {
-  const [calorieEatenData, setCalorieEatenData] = useState<
-    CalorieEatenChartData[]
-  >([]);
-  // Fetch data from Supabase
-  const loadData = async () => {
-    const { data, error } = await supabase
-      .from("daily_tracker")
-      .select("date, calories_eaten")
-      .order("date");
+interface Props {
+  entriesData: Tracker[];
+  refreshData: () => void;
+}
 
-    if (!error && data) {
-      setCalorieEatenData(data);
-    }
-  };
+const CalorieEatenChart = ({ entriesData, refreshData }: Props) => {
+  const calorieEatenData: CalorieEatenChartData[] = entriesData;
   useEffect(() => {
-    loadData();
+    refreshData();
   }, []);
 
   return (

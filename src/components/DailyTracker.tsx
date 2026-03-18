@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
 import type { TrackerForm } from "../types/trackerForm";
@@ -12,14 +12,12 @@ import {
   FaWeightScale,
 } from "react-icons/fa6";
 
-// interface TrackerForm {
-//   date: string;
-//   calories_eaten: number;
-//   exercise_burn: number;
-//   steps: number;
-//   weight: number;
-//   notes: string;
-// }
+interface Props {
+  entriesData: Tracker[];
+  user_id: string;
+  refreshData: () => void;
+  loading: boolean;
+}
 
 const emptyForm: TrackerForm = {
   date: "",
@@ -30,42 +28,16 @@ const emptyForm: TrackerForm = {
   notes: "",
 };
 
-const DailyTracker = () => {
-  const [entries, setEntries] = useState<Tracker[]>([]);
+const DailyTracker = ({ entriesData, user_id, refreshData }: Props) => {
   const [form, setForm] = useState<TrackerForm>(emptyForm);
 
   const [showModal, setShowModal] = useState(false);
   const [editingEntry, setEditingEntry] = useState<Tracker | null>(null);
 
-  const [userId, setUserId] = useState<string>("");
-
-  const loadEntries = async (uid?: string) => {
-    const id = uid || userId;
-
-    const { data } = await supabase
-      .from("daily_tracker")
-      .select("*")
-      .eq("user_id", id)
-      .order("date", { ascending: false });
-
-    if (data) setEntries(data as Tracker[]);
-  };
-
-  const init = async () => {
-    const { data } = await supabase.auth.getUser();
-
-    const user = data?.user;
-
-    if (!user) return;
-
-    setUserId(user.id);
-
-    loadEntries(user.id);
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
+  const userId = user_id;
+  const entries = useMemo(() => {
+    return [...entriesData].reverse(); // descending
+  }, [entriesData]);
 
   const openAddModal = () => {
     setEditingEntry(null);
@@ -110,8 +82,7 @@ const DailyTracker = () => {
 
     setShowModal(false);
     setEditingEntry(null);
-
-    loadEntries();
+    refreshData();
   };
 
   const deleteEntry = async (id: number) => {
@@ -124,8 +95,7 @@ const DailyTracker = () => {
       .delete()
       .eq("id", id)
       .eq("user_id", userId);
-
-    loadEntries();
+    refreshData();
   };
 
   const updateField = <K extends keyof TrackerForm>(

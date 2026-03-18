@@ -1,67 +1,55 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+// import { supabase } from "../lib/supabaseClient";
+import type { Tracker } from "../types/tracker";
 
-interface WeightEntry {
-  date: string;
-  weight: number;
+interface Props {
+  entriesData: Tracker[];
+  refreshData: () => void;
 }
 
 const targetWeight = 110;
 
-const GoalProjection = () => {
+const GoalProjection = ({ entriesData, refreshData }: Props) => {
   const [goalDate, setGoalDate] = useState<string>("");
 
-  const loadWeights = async () => {
-    const { data: userData } = await supabase.auth.getUser();
+  //let goalDate = "";
 
-    const user = userData?.user;
+  // const loadWeights = async () => {
 
-    if (!user) return;
-
-    const { data } = await supabase
-      .from("daily_tracker")
-      .select("date, weight")
-      .eq("user_id", user.id)
-      .order("date", { ascending: true });
-
-    if (data && data.length >= 2) {
-      calculateProjection(data);
-    }
-  };
-
-  const calculateProjection = (weights: WeightEntry[]) => {
-    const startWeight = weights[0].weight;
-    const currentWeight = weights[weights.length - 1].weight;
-
-    const startDate = new Date(weights[0].date);
-    const currentDate = new Date(weights[weights.length - 1].date);
-
-    const days =
-      (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
-
-    if (days <= 0) return;
-
-    const dailyLoss = (startWeight - currentWeight) / days;
-
-    console.log(startWeight, currentWeight, days, dailyLoss);
-
-    if (dailyLoss <= 0) {
-      setGoalDate("Trend unclear");
-      return;
-    }
-
-    const remainingWeight = currentWeight - targetWeight;
-
-    const daysNeeded = remainingWeight / dailyLoss;
-
-    const goal = new Date();
-    goal.setDate(goal.getDate() + Math.ceil(daysNeeded));
-
-    setGoalDate(goal.toLocaleDateString());
-  };
+  // };
 
   useEffect(() => {
-    loadWeights();
+    if (entriesData && entriesData.length >= 2) {
+      const weights = entriesData;
+      const startWeight = weights[0].weight;
+      const currentWeight = weights[weights.length - 1].weight;
+
+      const startDate = new Date(weights[0].date);
+      const currentDate = new Date(weights[weights.length - 1].date);
+
+      const days =
+        (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+
+      if (days <= 0) return;
+
+      const dailyLoss = (startWeight - currentWeight) / days;
+
+      if (dailyLoss <= 0) {
+        setGoalDate("Trend unclear");
+        return;
+      } else {
+        const remainingWeight = currentWeight - targetWeight;
+
+        const daysNeeded = remainingWeight / dailyLoss;
+
+        const goal = new Date();
+        goal.setDate(goal.getDate() + Math.ceil(daysNeeded));
+
+        setGoalDate(goal.toLocaleDateString());
+      }
+    }
+
+    refreshData();
   }, []);
 
   return (
