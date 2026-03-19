@@ -91,7 +91,7 @@ const Dashboard = () => {
   } else {
     if (dailyTrackers.length <= 0) {
       return (
-        <div className="min-h-screen bg-gray-100 p-8">
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
 
@@ -102,14 +102,14 @@ const Dashboard = () => {
                   alt="Fitness Tracker Logo"
                   className="h-12 w-12 mr-3"
                 />
-                <h1 className="text-3xl font-bold">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-800 dark:text-white">
                   Fitness Tracker Dashboard
                 </h1>
               </div>
 
               <button
                 onClick={handleLogout}
-                className="bg-red-500 text-white px-4 py-2 rounded"
+                className="bg-red-500 text-white px-4 py-2 rounded hover:scale-105 transition"
               >
                 Logout
               </button>
@@ -122,7 +122,7 @@ const Dashboard = () => {
       );
     } else {
       return (
-        <div className="min-h-screen bg-gray-100 p-8">
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
 
@@ -133,14 +133,14 @@ const Dashboard = () => {
                   alt="Fitness Tracker Logo"
                   className="h-12 w-12 mr-3"
                 />
-                <h1 className="text-3xl font-bold">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-800 dark:text-white">
                   Fitness Tracker Dashboard
                 </h1>
               </div>
 
               <button
                 onClick={handleLogout}
-                className="bg-red-500 text-white px-4 py-2 rounded"
+                className="bg-red-500 text-white px-4 py-2 rounded hover:scale-105 transition"
               >
                 Logout
               </button>

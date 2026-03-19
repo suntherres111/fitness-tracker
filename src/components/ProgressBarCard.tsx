@@ -31,7 +31,7 @@ const ProgressCard = ({
         : "text-red-600";
 
   return (
-    <div className="bg-white shadow rounded-xl p-5">
+    <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200 dark:border-gray-700 shadow-lg rounded-2xl p-5">
       <p className="text-gray-500 text-sm mb-2">Goal Progress</p>
 
       <p className={`${analyticColor} text-2xl font-bold mb-3`}>

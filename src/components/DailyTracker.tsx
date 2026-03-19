@@ -114,7 +114,8 @@ const DailyTracker = ({ entriesData, user_id, refreshData }: Props) => {
 
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded"
+          //className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded"
+          className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:scale-105 transition"
         >
           <FiPlus />
           Add Entry
@@ -268,7 +269,7 @@ const DailyTracker = ({ entriesData, user_id, refreshData }: Props) => {
 
               <button
                 onClick={saveEntry}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:scale-105 transition"
               >
                 Save
               </button>
