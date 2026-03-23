@@ -42,10 +42,12 @@ const GoalProjection = ({ entriesData, refreshData }: Props) => {
   }, []);
 
   return (
-    <div className="bg-white shadow rounded-xl p-5">
-      <h2 className="text-xl font-bold mb-2">Estimated Goal Date</h2>
+    <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200 dark:border-gray-700 shadow-lg rounded-2xl p-5">
+      <h2 className="text-xl font-bold mb-2 text-gray-500">
+        Estimated Goal Date
+      </h2>
 
-      <p className="text-blue-800 text-2xl font-bold mt-1">{goalDate || "-"}</p>
+      <p className="text-blue-600 text-2xl font-bold mt-1">{goalDate || "-"}</p>
     </div>
   );
 };
